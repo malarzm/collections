@@ -1,0 +1,26 @@
+{
+  "name": "malarzm/collections",
+  "type": "library",
+  "description": "Various implementations of Doctrine's Collection interface",
+  "keywords": ["collections", "array", "iterator"],
+  "homepage": "http://www.doctrine-project.org",
+  "license": "MIT",
+  "authors": [
+    { "name": "Maciej Malarz", "email": "malarzm@gmail.com" }
+  ],
+  "require": {
+    "doctrine/collections": "~1.1",
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-0": { "Malarzm\\Collections\\": "lib/" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
