@@ -24,3 +24,8 @@ class SortedIntCollection extends Malarzm\Collections\SortedCollection
 
 $coll = new SortedIntCollection([], 'usort');
 ```
+
+## ObjectSet
+
+Collection that ensures it contains only one instance of a given object at a time thus providing very efficient
+`contains` calls. Add/set calls are NOP in case of object being already in the collection.
