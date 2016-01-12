@@ -15,6 +15,11 @@ abstract class AbstractCollection implements Collection
      */
     protected $elements = [];
 
+    public function __construct(array $elements = [])
+    {
+        $this->elements = $elements;
+    }
+
     /**
      * @inheritdoc
      */

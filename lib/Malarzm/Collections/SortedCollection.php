@@ -29,7 +29,7 @@ abstract class SortedCollection extends AbstractCollection
      */
     public function __construct(array $elements = [], callable $sort = null)
     {
-        $this->elements = $elements;
+        parent::__construct($elements);
         $this->sort = $sort !== null ? $sort : 'uasort';
         call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
     }
