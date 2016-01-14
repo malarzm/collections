@@ -27,7 +27,7 @@ $coll = new SortedIntCollection([], 'usort');
 ## ObjectSet
 
 Collection that ensures it contains only one instance of a given object at a time thus providing very efficient
-`contains` calls. Add/set calls are NOP in case of object being already in the collection.
+`contains` implementation. Add/set calls are NOP in case of object being already in the collection.
 
 It's ready to use right away.
 
@@ -67,6 +67,22 @@ Library also ships `Malarzm\Collections\DiffableCollection` interface than can b
 
 ## ListArray
 
-Collection that ensures held elements are always stored as a list (array indexed by consecutive numbers).
+Collection that ensures held elements are always stored as a list (array indexed by consecutive numbers). An exception
+is thrown when trying to write to invalid index.
 
 It's ready to use right away.
+
+## SortedList
+
+Extended implementation of `ListArray` that additionally keeps elements sorted thus providing more efficient `contains`
+and `removeElement` implementations.
+
+```php
+class SortedList extends Malarzm\Collections\SortedList
+{
+    public function compare($a, $b)
+    {
+        // ...
+    }
+}
+```
