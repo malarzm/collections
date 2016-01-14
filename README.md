@@ -64,3 +64,9 @@ class Diffable extends Malarzm\Collections\Diffable
 
 Library also ships `Malarzm\Collections\DiffableCollection` interface than can be backed up by
 `Malarzm\Collections\Mixin\Diffable` trait for your own use.
+
+## ListArray
+
+Collection that ensures held elements are always stored as a list (array indexed by consecutive numbers).
+
+It's ready to use right away.
