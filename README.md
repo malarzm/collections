@@ -1,5 +1,7 @@
 # Collections
 
+[![Build Status](https://travis-ci.org/malarzm/collections.svg?branch=master)](https://travis-ci.org/malarzm/collections)
+
 Various implementations of Doctrine's Collection interface allowing you to kickstart development of own ones. Each time
 an interface or an abstract class requires you to implement `compare` method it needs a standard PHP comparison function
 that returns an integer less than, equal to, or greater than zero if the first argument is considered to be respectively
