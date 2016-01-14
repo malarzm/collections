@@ -44,3 +44,23 @@ class Set extends Malarzm\Collections\Set
         // ...
     }
 }
+```
+
+## Diffable
+
+Collection that allows you to track changes done between snapshots (first one is taken just after constructing
+collection, next are taken at the discretion of developer by calling `->snapshot()`). Use `->getAddedElements()` and
+`->getRemovedElements()` to get new and no longer existing elements respectively.
+
+```php
+class Diffable extends Malarzm\Collections\Diffable
+{
+    public function compare($a, $b)
+    {
+        // ...
+    }
+}
+```
+
+Library also ships `Malarzm\Collections\DiffableCollection` interface than can be backed up by
+`Malarzm\Collections\Mixin\Diffable` trait for your own use.
