@@ -55,9 +55,15 @@ abstract class SortedCollection extends AbstractCollection
      */
     public function removeElement($element)
     {
-        $key = array_search($element, $this->elements, true);
+        $key = null;
+        foreach ($this->elements as $i => $e) {
+            if ($this->compare($element, $e) === 0) {
+                $key = $i;
+                break;
+            }
+        }
 
-        if ($key === false) {
+        if ($key === null) {
             return false;
         }
 
