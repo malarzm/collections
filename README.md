@@ -76,8 +76,8 @@ It's ready to use right away.
 
 ## SortedList
 
-Extended implementation of `ListArray` that additionally keeps elements sorted thus providing more efficient `contains`
-and `removeElement` implementations.
+Extended implementation of `ListArray` that additionally keeps elements sorted thus providing more efficient `contains`,
+`indexOf` and `removeElement` implementations.
 
 ```php
 class SortedList extends Malarzm\Collections\SortedList

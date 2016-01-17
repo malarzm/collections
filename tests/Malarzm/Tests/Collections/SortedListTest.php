@@ -54,6 +54,19 @@ class SortedListTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($c->contains(10));
         $this->assertFalse($c->contains(11));
     }
+
+    public function testIndexOf()
+    {
+        $c = new SortedIntList([ 5, 9, 7, 1, 3 ]);
+        $this->assertSame(0, $c->indexOf(1));
+        $this->assertSame(1, $c->indexOf(3));
+        $this->assertSame(2, $c->indexOf(5));
+        $this->assertSame(3, $c->indexOf(7));
+        $this->assertSame(4, $c->indexOf(9));
+
+        $c[] = 10;
+        $this->assertSame(5, $c->indexOf(10));
+    }
 }
 
 class SortedIntList extends SortedList

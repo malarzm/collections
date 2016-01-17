@@ -37,6 +37,30 @@ abstract class SortedCollection extends AbstractCollection
     /**
      * @inheritdoc
      */
+    public function add($value)
+    {
+        $this->elements[] = $value;
+        call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
+
+        return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function indexOf($element)
+    {
+        foreach ($this->elements as $i => $e) {
+            if ($this->compare($element, $e) === 0) {
+                return $i;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function remove($key)
     {
         if ( ! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
@@ -55,15 +79,9 @@ abstract class SortedCollection extends AbstractCollection
      */
     public function removeElement($element)
     {
-        $key = null;
-        foreach ($this->elements as $i => $e) {
-            if ($this->compare($element, $e) === 0) {
-                $key = $i;
-                break;
-            }
-        }
+        $key = $this->indexOf($element);
 
-        if ($key === null) {
+        if ($key === false) {
             return false;
         }
 
@@ -80,16 +98,5 @@ abstract class SortedCollection extends AbstractCollection
     {
         $this->elements[$key] = $value;
         call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function add($value)
-    {
-        $this->elements[] = $value;
-        call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
-
-        return true;
     }
 }

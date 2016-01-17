@@ -43,6 +43,19 @@ abstract class Set extends AbstractCollection
     /**
      * @inheritdoc
      */
+    public function indexOf($element)
+    {
+        foreach ($this->elements as $i => $e) {
+            if ($this->compare($element, $e) === 0) {
+                return $i;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function remove($key)
     {
         if ( ! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
@@ -60,15 +73,9 @@ abstract class Set extends AbstractCollection
      */
     public function removeElement($element)
     {
-        $key = null;
-        foreach ($this->elements as $i => $e) {
-            if ($this->compare($element, $e) === 0) {
-                $key = $i;
-                break;
-            }
-        }
+        $key = $this->indexOf($element);
 
-        if ($key === null) {
+        if ($key === false) {
             return false;
         }
 

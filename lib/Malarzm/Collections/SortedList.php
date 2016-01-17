@@ -43,7 +43,31 @@ abstract class SortedList extends ListArray
      */
     public function contains($element)
     {
-        return $this->binarySearch($element) > -1;
+        return $this->indexOf($element) !== false;
+    }
+
+    /**
+     * Gets the index of given element.
+     * Contrary to standard implementation this is an O(log n) operation, where n is the size of the collection.
+     *
+     * @param mixed $element
+     * @return int|bool
+     */
+    public function indexOf($element)
+    {
+        $start = 0; $end = count($this->elements) - 1;
+        while ($start <= $end) {
+            $middle = (int) (($start + $end) / 2);
+            $cmp = $this->compare($element, $this->elements[$middle]);
+            if ($cmp === 0) {
+                return $middle;
+            } elseif ($cmp < 0) {
+                $end = $middle - 1;
+            } else {
+                $start = $middle + 1;
+            }
+        }
+        return false;
     }
 
     /**
@@ -51,7 +75,7 @@ abstract class SortedList extends ListArray
      */
     public function removeElement($element)
     {
-        $key = $this->binarySearch($element);
+        $key = $this->indexOf($element);
 
         if ($key > -1) {
             return false;
@@ -70,26 +94,5 @@ abstract class SortedList extends ListArray
     {
         parent::set($key, $value);
         usort($this->elements, [ $this, 'compare' ]);
-    }
-
-    /**
-     * @param mixed $element
-     * @return int index at which element was found or -1
-     */
-    private function binarySearch($element)
-    {
-        $start = 0; $end = count($this->elements) - 1;
-        while ($start <= $end) {
-            $middle = (int) (($start + $end) / 2);
-            $cmp = $this->compare($element, $this->elements[$middle]);
-            if ($cmp === 0) {
-                return $middle;
-            } elseif ($cmp < 0) {
-                $end = $middle - 1;
-            } else {
-                $start = $middle + 1;
-            }
-        }
-        return -1;
     }
 }
