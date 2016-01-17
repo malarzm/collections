@@ -4,8 +4,17 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\Set;
 
-class SetTest extends \PHPUnit_Framework_TestCase
+class SetTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        $associative = [ 'foo' => 1, 'bar' => 2, 7 ];
+        return [
+            [ new IntSet([ 5, 7, 9 ]), [ 5, 7, 9] ],
+            [ new IntSet($associative), $associative ],
+        ];
+    }
+
     public function testCantAddTwice()
     {
         $coll = new IntSet();
@@ -48,13 +57,6 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $coll);
         $coll[1] = 13;
         $this->assertCount(2, $coll);
-    }
-
-    public function testContains()
-    {
-        $coll = new IntSet([ 13 ]);
-        $this->assertTrue($coll->contains(13));
-        $this->assertFalse($coll->contains(7));
     }
 }
 

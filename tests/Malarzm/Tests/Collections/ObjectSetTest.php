@@ -4,8 +4,16 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\ObjectSet;
 
-class ObjectSetTest extends \PHPUnit_Framework_TestCase
+class ObjectSetTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        $elements = [ new \stdClass(), new \stdClass(), new \stdClass() ];
+        return [
+            [ new ObjectSet($elements), $elements ],
+        ];
+    }
+
     public function testCantAddObjectTwice()
     {
         $o = new \stdClass();

@@ -4,8 +4,15 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\ListArray;
 
-class ListArrayTest extends \PHPUnit_Framework_TestCase
+class ListArrayTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        return [
+            [ new ListArray([1, 2, 3]), [1, 2, 3] ],
+        ];
+    }
+
     public function testConstructFixesElements()
     {
         $coll = new ListArray([ 3 => 1]);

@@ -4,8 +4,15 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\SortedList;
 
-class SortedListTest extends \PHPUnit_Framework_TestCase
+class SortedListTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        return [
+            [ new SortedIntList([1, 2, 3]), [1, 2, 3] ],
+        ];
+    }
+
     public function testConstructFixesElements()
     {
         $c = new SortedIntList([ 1 => 8, 3 => 4, 8 => 9 ]);

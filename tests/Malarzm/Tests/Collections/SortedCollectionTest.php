@@ -4,8 +4,17 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\SortedCollection;
 
-class SortedCollectionTest extends \PHPUnit_Framework_TestCase
+class SortedCollectionTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        $associative = [ 'foo' => 1, 'bar' => 2, 5 ];
+        return [
+            [ new SortedIntCollection([ 5, 7, 9 ], 'usort'), [ 5, 7, 9] ],
+            [ new SortedIntCollection($associative, 'uasort'), $associative ],
+        ];
+    }
+
     public function testFunctional()
     {
         $c = new SortedIntCollection([], 'usort');

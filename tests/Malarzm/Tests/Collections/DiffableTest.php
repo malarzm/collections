@@ -4,8 +4,17 @@ namespace Malarzm\Collections\Tests;
 
 use Malarzm\Collections\Diffable;
 
-class DiffableTest extends \PHPUnit_Framework_TestCase
+class DiffableTest extends BaseTest
 {
+    public function provideCollection()
+    {
+        $associative = [ 'foo' => 1, 'bar' => 2, 'baz' ];
+        return [
+            [ new DiffableImpl([ 5, 7, 9 ]), [ 5, 7, 9] ],
+            [ new DiffableImpl($associative), $associative ],
+        ];
+    }
+
     public function testConstructSnapshots()
     {
         $coll = new DiffableImpl([ 5, 7 ]);
