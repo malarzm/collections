@@ -32,7 +32,7 @@ class SortedListTest extends BaseTest
         $this->assertSame([6, 8], $c->toArray());
     }
 
-    public function testContains()
+    public function testContainsThoroughly()
     {
         $c = new SortedIntList([ 5, 9, 7, 1, 3 ]);
         $this->assertFalse($c->contains(0));
@@ -62,7 +62,7 @@ class SortedListTest extends BaseTest
         $this->assertFalse($c->contains(11));
     }
 
-    public function testIndexOf()
+    public function testIndexOfThoroughly()
     {
         $c = new SortedIntList([ 5, 9, 7, 1, 3 ]);
         $this->assertSame(0, $c->indexOf(1));

@@ -2,6 +2,7 @@
 
 namespace Malarzm\Collections\Tests;
 
+use Doctrine\Common\Collections\Collection;
 use Malarzm\Collections\ObjectSet;
 
 class ObjectSetTest extends BaseTest
@@ -74,12 +75,12 @@ class ObjectSetTest extends BaseTest
         $this->assertCount(2, $coll);
     }
 
-    public function testContains()
+    /**
+     * @dataProvider provideCollection
+     */
+    public function testContains(Collection $coll, array $elements)
     {
-        $o1 = new \stdClass();
-        $o2 = new \stdClass();
-        $coll = new ObjectSet([ $o1 ]);
-        $this->assertTrue($coll->contains($o1));
-        $this->assertFalse($coll->contains($o2));
+        $this->assertTrue($coll->contains($coll->first()));
+        $this->assertFalse($coll->contains(new \stdClass()));
     }
 }
