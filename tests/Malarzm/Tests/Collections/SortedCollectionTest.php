@@ -41,6 +41,24 @@ class SortedCollectionTest extends BaseTest
         ++$i; unset($c[1]);
         $this->assertEquals($i, $spy->cnt);
     }
+
+    public function testMapKeepsSortOrder()
+    {
+        $collection = new SortedObjectCollection();
+        $collection->add((object) ['sortOrder' => 1]);
+        $collection->add((object) ['sortOrder' => 2]);
+        $collection->add((object) ['sortOrder' => 3]);
+
+        $newCollection = $collection->map(function ($object) { return (array) $object; });
+
+        $expected = [
+            ['sortOrder' => 1],
+            ['sortOrder' => 2],
+            ['sortOrder' => 3],
+        ];
+
+        $this->assertSame($expected, $newCollection->toArray());
+    }
 }
 
 class SortedIntCollection extends SortedCollection
@@ -50,6 +68,28 @@ class SortedIntCollection extends SortedCollection
         if ($a > $b) {
             return 1;
         } elseif ($a === $b) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
+
+class SortedObjectCollection extends SortedCollection
+{
+    public function compare($a, $b)
+    {
+        if (! $a instanceof \stdClass || ! $b instanceof \stdClass) {
+            return 0;
+        }
+
+        if (! isset($a->sortOrder, $b->sortOrder)) {
+            return 0;
+        }
+
+        if ($a->sortOrder > $b->sortOrder) {
+            return 1;
+        } elseif ($a->sortOrder === $b->sortOrder) {
             return 0;
         } else {
             return -1;
