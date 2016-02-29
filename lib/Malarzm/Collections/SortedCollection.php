@@ -28,12 +28,16 @@ abstract class SortedCollection extends AbstractCollection
      *
      * @param array $elements
      * @param callable $sort uasort is used by default
+     * @param boolean $sortElements If true, elements will be sorted when creating the collection
      */
-    public function __construct(array $elements = [], callable $sort = null)
+    public function __construct(array $elements = [], callable $sort = null, $sortElements = true)
     {
         parent::__construct($elements);
         $this->sort = $sort !== null ? $sort : 'uasort';
-        call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
+
+        if ($sortElements) {
+            call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
+        }
     }
 
     /**
@@ -52,7 +56,7 @@ abstract class SortedCollection extends AbstractCollection
      */
     public function filter(Closure $p)
     {
-        return new static(array_filter($this->elements, $p), $this->sort);
+        return new static(array_filter($this->elements, $p), $this->sort, false);
     }
 
     /**
@@ -73,7 +77,7 @@ abstract class SortedCollection extends AbstractCollection
      */
     public function map(Closure $func)
     {
-        return new static(array_map($func, $this->elements), $this->sort);
+        return new static(array_map($func, $this->elements), $this->sort, false);
     }
 
     /**
@@ -91,7 +95,7 @@ abstract class SortedCollection extends AbstractCollection
             }
         }
 
-        return array(new static($matches, $this->sort), new static($noMatches, $this->sort));
+        return array(new static($matches, $this->sort, false), new static($noMatches, $this->sort, false));
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Malarzm\Collections;
 
+use Closure;
+
 abstract class SortedList extends ListArray
 {
     /**
@@ -18,11 +20,15 @@ abstract class SortedList extends ListArray
      * Initializes SortedList ensuring that elements are in fact a sorted list.
      *
      * @param array $elements
+     * @param boolean $sortElements If true, elements will be sorted when creating the list
      */
-    public function __construct(array $elements = [])
+    public function __construct(array $elements = [], $sortElements = true)
     {
         parent::__construct($elements);
-        usort($this->elements, [ $this, 'compare' ]);
+
+        if ($sortElements) {
+            usort($this->elements, [ $this, 'compare' ]);
+        }
     }
 
     /**
@@ -94,5 +100,39 @@ abstract class SortedList extends ListArray
     {
         parent::set($key, $value);
         usort($this->elements, [ $this, 'compare' ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function map(Closure $func)
+    {
+        return new static(array_map($func, $this->elements), false);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function filter(Closure $p)
+    {
+        return new static(array_filter($this->elements, $p), false);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function partition(Closure $p)
+    {
+        $matches = $noMatches = array();
+
+        foreach ($this->elements as $key => $element) {
+            if ($p($key, $element)) {
+                $matches[$key] = $element;
+            } else {
+                $noMatches[$key] = $element;
+            }
+        }
+
+        return array(new static($matches, false), new static($noMatches, false));
     }
 }
