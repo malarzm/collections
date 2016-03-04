@@ -24,6 +24,17 @@ class ObjectSetTest extends BaseTest
         $this->assertCount(1, $coll);
     }
 
+    public function testClearClearingHashes()
+    {
+        $o = new \stdClass();
+        $coll = new ObjectSet([ $o ]);
+        $this->assertCount(1, $coll);
+        $coll->clear();
+        $this->assertCount(0, $coll);
+        $coll->add($o);
+        $this->assertCount(1, $coll);
+    }
+
     public function testConstructRegistersObjects()
     {
         $o = new \stdClass();

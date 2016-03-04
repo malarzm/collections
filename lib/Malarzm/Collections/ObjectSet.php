@@ -30,6 +30,15 @@ class ObjectSet extends AbstractCollection
     }
 
     /**
+     * @inheritdoc
+     */
+    public function clear()
+    {
+        parent::clear();
+        $this->hashes = [];
+    }
+
+    /**
      * Checks whether an element is contained in the collection.
      * Contrary to standard implementation this is an O(1) operation.
      *
