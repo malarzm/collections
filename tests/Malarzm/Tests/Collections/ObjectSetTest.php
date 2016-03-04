@@ -30,9 +30,11 @@ class ObjectSetTest extends BaseTest
         $coll = new ObjectSet([ $o ]);
         $this->assertCount(1, $coll);
         $coll->clear();
+        $this->assertFalse($coll->contains($o));
         $this->assertCount(0, $coll);
         $coll->add($o);
         $this->assertCount(1, $coll);
+        $this->assertTrue($coll->contains($o));
     }
 
     public function testConstructRegistersObjects()
