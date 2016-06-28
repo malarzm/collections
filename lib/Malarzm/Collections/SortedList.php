@@ -83,7 +83,7 @@ abstract class SortedList extends ListArray
     {
         $key = $this->indexOf($element);
 
-        if ($key > -1) {
+        if ($key === false) {
             return false;
         }
 

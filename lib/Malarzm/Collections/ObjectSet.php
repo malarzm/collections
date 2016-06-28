@@ -77,7 +77,7 @@ class ObjectSet extends AbstractCollection
             return false;
         }
 
-        $key = array_search($element, $this->elements, true);
+        $key = $this->indexOf($element);
 
         if ($key === false) {
             return false;

@@ -43,7 +43,7 @@ class ListArray extends AbstractCollection
      */
     public function removeElement($element)
     {
-        $key = array_search($element, $this->elements, true);
+        $key = $this->indexOf($element);
 
         if ($key === false) {
             return false;

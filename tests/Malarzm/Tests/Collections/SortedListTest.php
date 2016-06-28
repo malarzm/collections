@@ -92,6 +92,19 @@ class SortedListTest extends BaseTest
 
         $this->assertSame($expected, $newCollection->toArray());
     }
+
+    public function testRemoveElement()
+    {
+        $toRemove = (object) ['sortOrder' => 2];
+        $collection = new SortedObjectList();
+        $collection->add((object) ['sortOrder' => 1]);
+        $collection->add($toRemove);
+        $collection->add((object) ['sortOrder' => 3]);
+
+        $collection->removeElement($toRemove);
+        $this->assertCount(2, $collection);
+        $this->assertFalse($collection->indexOf($toRemove));
+    }
 }
 
 class SortedIntList extends SortedList
