@@ -43,20 +43,20 @@ abstract class SortedCollection extends AbstractCollection
     /**
      * @inheritdoc
      */
+    protected function createFrom(array $elements)
+    {
+        return new static($elements, $this->sort, false);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function add($value)
     {
         $this->elements[] = $value;
         call_user_func_array($this->sort, [&$this->elements, [$this, 'compare']]);
 
         return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function filter(Closure $p)
-    {
-        return new static(array_filter($this->elements, $p), $this->sort, false);
     }
 
     /**
@@ -70,32 +70,6 @@ abstract class SortedCollection extends AbstractCollection
             }
         }
         return false;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function map(Closure $func)
-    {
-        return new static(array_map($func, $this->elements), $this->sort, false);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function partition(Closure $p)
-    {
-        $matches = $noMatches = array();
-
-        foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
-                $matches[$key] = $element;
-            } else {
-                $noMatches[$key] = $element;
-            }
-        }
-
-        return array(new static($matches, $this->sort, false), new static($noMatches, $this->sort, false));
     }
 
     /**

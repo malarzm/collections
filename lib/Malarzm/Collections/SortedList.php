@@ -34,6 +34,14 @@ abstract class SortedList extends ListArray
     /**
      * @inheritdoc
      */
+    protected function createFrom(array $elements)
+    {
+        return new static($elements, false);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function add($element)
     {
         parent::add($element);
@@ -100,39 +108,5 @@ abstract class SortedList extends ListArray
     {
         parent::set($key, $value);
         usort($this->elements, [ $this, 'compare' ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function map(Closure $func)
-    {
-        return new static(array_map($func, $this->elements), false);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function filter(Closure $p)
-    {
-        return new static(array_filter($this->elements, $p), false);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function partition(Closure $p)
-    {
-        $matches = $noMatches = array();
-
-        foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
-                $matches[$key] = $element;
-            } else {
-                $noMatches[$key] = $element;
-            }
-        }
-
-        return array(new static($matches, false), new static($noMatches, false));
     }
 }

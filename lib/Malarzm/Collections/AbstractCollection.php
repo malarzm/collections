@@ -21,6 +21,21 @@ abstract class AbstractCollection implements Collection
     }
 
     /**
+     * Creates a new instance from the specified elements.
+     *
+     * This method is provided for derived classes to specify how a new
+     * instance should be created when constructor semantics have changed.
+     *
+     * @param array $elements Elements.
+     *
+     * @return static
+     */
+    protected function createFrom(array $elements)
+    {
+        return new static($elements);
+    }
+
+    /**
      * @inheritdoc
      */
     public function toArray()
@@ -205,7 +220,7 @@ abstract class AbstractCollection implements Collection
      */
     public function map(Closure $func)
     {
-        return new static(array_map($func, $this->elements));
+        return $this->createFrom(array_map($func, $this->elements));
     }
 
     /**
@@ -213,7 +228,7 @@ abstract class AbstractCollection implements Collection
      */
     public function filter(Closure $p)
     {
-        return new static(array_filter($this->elements, $p));
+        return $this->createFrom(array_filter($this->elements, $p));
     }
 
     /**
@@ -245,7 +260,7 @@ abstract class AbstractCollection implements Collection
             }
         }
 
-        return array(new static($matches), new static($noMatches));
+        return array($this->createFrom($matches), $this->createFrom($noMatches));
     }
 
     /**
