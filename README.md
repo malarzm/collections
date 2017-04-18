@@ -7,7 +7,7 @@ an interface or an abstract class requires you to implement `compare` method it 
 that returns an integer less than, equal to, or greater than zero if the first argument is considered to be respectively
 less than, equal to, or greater than the second.
 
-This library sports:
+This library supports:
 
 ## SortedCollection
 
