@@ -1,9 +1,10 @@
 <?php
 
-namespace Malarzm\Collections\Tests;
+namespace Malarzm\Collections\Tests\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Malarzm\Collections\ObjectSet;
+use Malarzm\Collections\Tests\BaseTest;
 
 class ObjectSetTest extends BaseTest
 {

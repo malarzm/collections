@@ -1,8 +1,9 @@
 <?php
 
-namespace Malarzm\Collections\Tests;
+namespace Malarzm\Collections\Tests\Collections;
 
 use Malarzm\Collections\ListArray;
+use Malarzm\Collections\Tests\BaseTest;
 
 class ListArrayTest extends BaseTest
 {

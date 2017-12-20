@@ -18,6 +18,9 @@
   "autoload": {
     "psr-0": { "Malarzm\\Collections\\": "lib/" }
   },
+  "autoload-dev": {
+    "psr-4": { "Malarzm\\Collections\\Tests\\": "tests/" }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

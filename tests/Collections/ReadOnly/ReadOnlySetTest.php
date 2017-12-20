@@ -2,7 +2,7 @@
 
 namespace Malarzm\Collections\Tests\Collections\ReadOnly;
 
-use Malarzm\Collections\Malarzm\Collections\ReadOnly\ReadOnlySet;
+use Malarzm\Collections\ReadOnly\ReadOnlySet;
 use Malarzm\Collections\Tests\BaseReadOnlyTest;
 
 class ReadOnlySetTest extends BaseReadOnlyTest
