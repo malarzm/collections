@@ -1,8 +1,9 @@
 <?php
 
-namespace Malarzm\Collections\Tests;
+namespace Malarzm\Collections\Tests\Collections;
 
 use Malarzm\Collections\Set;
+use Malarzm\Collections\Tests\BaseTest;
 
 class SetTest extends BaseTest
 {

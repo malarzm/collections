@@ -1,10 +1,11 @@
 <?php
 
-namespace Malarzm\Collections\Tests;
+namespace Malarzm\Collections\Tests\Collections\ReadOnly;
 
-use Malarzm\Collections\SortedCollection;
+use Malarzm\Collections\ReadOnly\ReadOnlySortedCollection;
+use Malarzm\Collections\Tests\BaseReadOnlyTest;
 
-class SortedCollectionTest extends BaseTest
+class ReadOnlySortedCollectionTest extends BaseReadOnlyTest
 {
     public function provideCollection()
     {
@@ -15,39 +16,20 @@ class SortedCollectionTest extends BaseTest
         ];
     }
 
-    public function testFunctional()
-    {
-        $c = new SortedIntCollection([], 'usort');
-        $c->add(6);
-        $c->add(1);
-        $c[] = 2;
-        $this->assertSame([1, 2, 6], $c->toArray());
-        $c->remove(1);
-        $this->assertSame([1, 6], $c->toArray());
-        $c[0] = 8;
-        $this->assertSame([6, 8], $c->toArray());
-    }
-
     public function testSortIsCalled()
     {
         $i = 0; $spy = new SortSpy();
-        ++$i; $c = new SortedIntCollection([], $spy);
-        ++$i; $c->add(1);
-        ++$i; $c[] = 2;
-        ++$i; $c[2] = 3;
-        ++$i; $c->set(3, 4);
-        ++$i; $c->removeElement(4);
-        ++$i; $c->remove(2);
-        ++$i; unset($c[1]);
+        ++$i; $c = new SortedIntCollection([2, 1], $spy);
         $this->assertEquals($i, $spy->cnt);
     }
 
     public function testMapKeepsSortOrder()
     {
-        $collection = new SortedObjectCollection();
-        $collection->add((object) ['sortOrder' => 1]);
-        $collection->add((object) ['sortOrder' => 2]);
-        $collection->add((object) ['sortOrder' => 3]);
+        $collection = new SortedObjectCollection([
+            (object) ['sortOrder' => 1],
+            (object) ['sortOrder' => 2],
+            (object) ['sortOrder' => 3],
+        ]);
 
         $newCollection = $collection->map(function ($object) { return (array) $object; });
 
@@ -61,7 +43,7 @@ class SortedCollectionTest extends BaseTest
     }
 }
 
-class SortedIntCollection extends SortedCollection
+class SortedIntCollection extends ReadOnlySortedCollection
 {
     public function compare($a, $b)
     {
@@ -75,7 +57,7 @@ class SortedIntCollection extends SortedCollection
     }
 }
 
-class SortedObjectCollection extends SortedCollection
+class SortedObjectCollection extends ReadOnlySortedCollection
 {
     public function compare($a, $b)
     {

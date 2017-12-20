@@ -5,5 +5,3 @@ if ( ! file_exists($file = __DIR__.'/../vendor/autoload.php')) {
 }
 
 $loader = require $file;
-
-$loader->add('Malarzm\Collections\Tests', __DIR__);

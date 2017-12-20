@@ -1,10 +1,10 @@
 <?php
 
-namespace Malarzm\Collections\Tests;
+namespace Malarzm\Collections\Tests\Collections\ReadOnly;
 
-use Malarzm\Collections\SortedList;
+use Malarzm\Collections\ReadOnly\ReadOnlySortedList;
 
-class SortedListTest extends BaseTest
+class ReadOnlySortedListTest extends \PHPUnit_Framework_TestCase
 {
     public function provideCollection()
     {
@@ -17,19 +17,6 @@ class SortedListTest extends BaseTest
     {
         $c = new SortedIntList([ 1 => 8, 3 => 4, 8 => 9 ]);
         $this->assertSame([4, 8, 9], $c->toArray());
-    }
-
-    public function testFunctional()
-    {
-        $c = new SortedIntList();
-        $c->add(6);
-        $c->add(1);
-        $c[] = 2;
-        $this->assertSame([1, 2, 6], $c->toArray());
-        $c->remove(1);
-        $this->assertSame([1, 6], $c->toArray());
-        $c[0] = 8;
-        $this->assertSame([6, 8], $c->toArray());
     }
 
     public function testContainsThoroughly()
@@ -46,20 +33,6 @@ class SortedListTest extends BaseTest
         $this->assertFalse($c->contains(8));
         $this->assertTrue($c->contains(9));
         $this->assertFalse($c->contains(10));
-
-        $c[] = 10;
-        $this->assertFalse($c->contains(0));
-        $this->assertTrue($c->contains(1));
-        $this->assertFalse($c->contains(2));
-        $this->assertTrue($c->contains(3));
-        $this->assertFalse($c->contains(4));
-        $this->assertTrue($c->contains(5));
-        $this->assertFalse($c->contains(6));
-        $this->assertTrue($c->contains(7));
-        $this->assertFalse($c->contains(8));
-        $this->assertTrue($c->contains(9));
-        $this->assertTrue($c->contains(10));
-        $this->assertFalse($c->contains(11));
     }
 
     public function testIndexOfThoroughly()
@@ -70,17 +43,16 @@ class SortedListTest extends BaseTest
         $this->assertSame(2, $c->indexOf(5));
         $this->assertSame(3, $c->indexOf(7));
         $this->assertSame(4, $c->indexOf(9));
-
-        $c[] = 10;
-        $this->assertSame(5, $c->indexOf(10));
+        $this->assertSame(false, $c->indexOf(666));
     }
 
     public function testMapKeepsSortOrder()
     {
-        $collection = new SortedObjectList();
-        $collection->add((object) ['sortOrder' => 1]);
-        $collection->add((object) ['sortOrder' => 2]);
-        $collection->add((object) ['sortOrder' => 3]);
+        $collection = new SortedObjectList([
+            (object) ['sortOrder' => 1],
+            (object) ['sortOrder' => 2],
+            (object) ['sortOrder' => 3],
+        ]);
 
         $newCollection = $collection->map(function ($object) { return (array) $object; });
 
@@ -92,22 +64,9 @@ class SortedListTest extends BaseTest
 
         $this->assertSame($expected, $newCollection->toArray());
     }
-
-    public function testRemoveElement()
-    {
-        $toRemove = (object) ['sortOrder' => 2];
-        $collection = new SortedObjectList();
-        $collection->add((object) ['sortOrder' => 1]);
-        $collection->add($toRemove);
-        $collection->add((object) ['sortOrder' => 3]);
-
-        $collection->removeElement($toRemove);
-        $this->assertCount(2, $collection);
-        $this->assertFalse($collection->indexOf($toRemove));
-    }
 }
 
-class SortedIntList extends SortedList
+class SortedIntList extends ReadOnlySortedList
 {
     public function compare($a, $b)
     {
@@ -121,7 +80,7 @@ class SortedIntList extends SortedList
     }
 }
 
-class SortedObjectList extends SortedList
+class SortedObjectList extends ReadOnlySortedList
 {
     public function compare($a, $b)
     {
